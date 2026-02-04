@@ -52,6 +52,7 @@ Lanzamos la prueba contra la aplicación en modo hilo único.
 ![Configuración del servidor sin cluster](img/5.png)
 
 **Resultado:** El rendimiento es bajo debido a la saturación del único núcleo disponible.
+
 ![Resultados Loadtest Sin Cluster](img/6.png)
 
 ### Prueba B: Con Cluster
@@ -60,6 +61,7 @@ Repetimos la misma prueba contra la aplicación clusterizada.
 ![Configuración del servidor con cluster](img/4.png)
 
 **Resultado:** Se observa una mejora significativa en las peticiones por segundo (RPS) y una mejor gestión de la concurrencia.
+
 ![Resultados Loadtest Con Cluster](img/8.png)
 
 ---
@@ -87,6 +89,8 @@ PM2 centraliza los registros (logs) de todos los hilos, permitiendo ver la activ
 Mediante el comando `pm2 monit`, accedemos a un panel de control que muestra el consumo de CPU y Memoria RAM de cada instancia individualmente.
 
 ![Dashboard de Monitorización](img/17.png)
+
+![pm2 monit](img/18.png)
 
 ### Zero Downtime Reload (Recarga sin caídas)
 Una de las características más importantes es la capacidad de desplegar cambios sin detener el servicio. El comando `pm2 reload` reinicia los workers secuencialmente (uno a uno).
