@@ -1,0 +1,12 @@
+$TTL    86400
+@       IN      SOA     ns.antonio.test. admin.antonio.test. (
+                        2025110402      ; Serial
+                        3600            ; Refresh
+                        1800            ; Retry
+                        604800          ; Expire
+                        86400 )         ; Negative Cache TTL
+
+@       IN      NS      ns.antonio.test.
+
+ns.antonio.test.    IN      A       192.168.56.101
+ftp.antonio.test.   IN      CNAME   ns.antonio.test.

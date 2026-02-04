@@ -1,0 +1,26 @@
+acl "confiables" {
+    192.168.56.0/24;
+    localhost;
+    localnets;
+};
+
+options {
+    directory "/var/cache/bind";
+
+    forwarders {
+        8.8.8.8;
+    };
+
+    allow-transfer { none; };
+
+    listen-on port 53 { 192.168.56.101; 127.0.0.1; };
+
+    recursion yes;
+
+    allow-recursion { confiables; };
+
+    listen-on-v6 { none; };
+
+    dnssec-validation auto;
+    auth-nxdomain no;
+};

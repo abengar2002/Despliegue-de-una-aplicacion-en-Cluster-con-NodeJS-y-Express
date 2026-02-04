@@ -1,0 +1,9 @@
+zone "antonio.test" {
+    type master;
+    file "/var/lib/bind/antonio.test.dns";
+};
+
+zone "56.168.192.in-addr.arpa" {
+    type master;
+    file "/var/lib/bind/antonio.test.rev";
+};
