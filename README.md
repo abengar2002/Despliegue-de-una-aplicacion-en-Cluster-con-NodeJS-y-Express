@@ -1,7 +1,9 @@
 # Despliegue de una aplicación en cluster con Node Express
 
-**Alumno:** Antonio Benitez Garcia
+**Alumno:** Antonio Benítez García
+
 **Módulo:** Despliegue de Aplicaciones Web
+
 **Curso:** 2025-2026
 
 ---
@@ -17,16 +19,16 @@ En esta práctica se documenta el análisis de rendimiento y escalabilidad de un
 ### Ejecución en Hilo Único
 Inicialmente, arrancamos la aplicación básica (`app.js`) que se ejecuta en una sola instancia.
 
-![Inicio de la aplicación app.js](1.png)
+![Inicio de la aplicación app.js](img/1.png)
 
 Al acceder a la ruta raíz `/`, la respuesta es inmediata ("Hello World").
 
-![Respuesta rápida en el navegador](2.png)
+![Respuesta rápida en el navegador](img/2.png)
 
 ### Demostración del Bloqueo
 Sin embargo, al acceder a una ruta que realiza un cálculo intensivo (`/api/5000...`), el hilo único de Node.js se satura procesando el bucle. Esto provoca que el servidor quede "congelado" e incapaz de responder a otras peticiones hasta que termina el cálculo.
 
-![Respuesta bloqueante en el navegador](3.png)
+![Respuesta bloqueante en el navegador](img/3.png)
 
 ---
 
@@ -34,7 +36,7 @@ Sin embargo, al acceder a una ruta que realiza un cálculo intensivo (`/api/5000
 
 Para solucionar el problema anterior, utilizamos el módulo nativo `cluster`. Esto permite crear una arquitectura Maestro-Trabajador, donde se lanza una instancia de la aplicación (Worker) por cada núcleo disponible en la CPU.
 
-![Ejecución del Cluster Nativo](7.png)
+![Ejecución del Cluster Nativo](img/7.png)
 
 Como se observa en la captura, el proceso Maestro (`Master`) inicializa los trabajadores (`Workers`). Si un worker se bloquea, los otros siguen disponibles para atender peticiones concurrentes.
 
@@ -47,18 +49,18 @@ Para cuantificar la mejora, realizamos pruebas de estrés utilizando la herramie
 ### Prueba A: Sin Cluster
 Lanzamos la prueba contra la aplicación en modo hilo único.
 
-![Configuración del servidor sin cluster](5.png)
+![Configuración del servidor sin cluster](img/5.png)
 
 **Resultado:** El rendimiento es bajo debido a la saturación del único núcleo disponible.
-![Resultados Loadtest Sin Cluster](6.png)
+![Resultados Loadtest Sin Cluster](img/6.png)
 
 ### Prueba B: Con Cluster
 Repetimos la misma prueba contra la aplicación clusterizada.
 
-![Configuración del servidor con cluster](4.png)
+![Configuración del servidor con cluster](img/4.png)
 
 **Resultado:** Se observa una mejora significativa en las peticiones por segundo (RPS) y una mejor gestión de la concurrencia.
-![Resultados Loadtest Con Cluster](8.png)
+![Resultados Loadtest Con Cluster](img/8.png)
 
 ---
 
@@ -69,27 +71,27 @@ Gestionar los clusters manualmente mediante código es complejo y propenso a err
 ### Inicialización del Cluster
 Arrancamos la aplicación utilizando PM2 en modo cluster (`-i 0` para usar todos los núcleos) o mediante un archivo `ecosystem.config.js`.
 
-![Inicio de PM2](9.png)
+![Inicio de PM2](img/9.png)
 
 ### Gestión de Procesos
 Podemos visualizar el estado de las instancias en cualquier momento mediante el comando `pm2 ls`. Vemos cómo PM2 mantiene los procesos en estado "online".
 
-![Listado de procesos PM2](15.png)
+![Listado de procesos PM2](img/15.png)
 
 ### Logs Unificados
 PM2 centraliza los registros (logs) de todos los hilos, permitiendo ver la actividad de todo el cluster en una sola pantalla.
 
-![Logs unificados en PM2](11.png)
+![Logs unificados en PM2](img/11.png)
 
 ### Monitorización en Tiempo Real
 Mediante el comando `pm2 monit`, accedemos a un panel de control que muestra el consumo de CPU y Memoria RAM de cada instancia individualmente.
 
-![Dashboard de Monitorización](17.png)
+![Dashboard de Monitorización](img/17.png)
 
 ### Zero Downtime Reload (Recarga sin caídas)
 Una de las características más importantes es la capacidad de desplegar cambios sin detener el servicio. El comando `pm2 reload` reinicia los workers secuencialmente (uno a uno).
 
-![Recarga secuencial sin caídas](19.png)
+![Recarga secuencial sin caídas](img/19.png)
 
 ---
 
